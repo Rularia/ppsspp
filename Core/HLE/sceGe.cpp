@@ -467,7 +467,12 @@ static u32 sceGeDrawSync(u32 mode) {
 	else if (!PSP_CoreParameter().compat.flags().DrawSyncInstant)
 		hleEatCycles(1240);
 	gstate_c.textureSyncTimeDomain++;
-	return hleLogDebug(Log::sceGe, gpu->DrawSync(mode));
+	u32 result = gpu->DrawSync(mode);
+	if (mode == 0 && PSP_CoreParameter().compat.flags().ForceLowerResolutionForEffectsOn) {
+		gpu->PerformReadbackToMemory(0x04000000, 0x00044000);
+		gpu->PerformReadbackToMemory(0x04080000, 0x00044000);
+	}
+	return hleLogDebug(Log::sceGe, result);
 }
 
 static int sceGeContinue() {
