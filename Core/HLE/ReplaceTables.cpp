@@ -986,11 +986,16 @@ static int Hook_soranokiseki_sc_download_frame() {
 }
 
 static int Hook_amagoushi_download_frame() {
-	// Amagoushi no Yakata (ULJS00216) offscreen picking pass renders to 0x04000000 or 0x04080000.
-	// Flush GPU framebuffer to VRAM before CPU decodes pixels into hit-test table.
-	gpu->PerformReadbackToMemory(0x04000000, 0x00044000);
-	gpu->PerformReadbackToMemory(0x04080000, 0x00044000);
-	NotifyMemInfo(MemBlockFlags::WRITE, 0x04000000, 0x00044000, "amagoushi_download_frame");
+	// Amagoushi no Yakata (ULJS00216): The game determines the active offscreen picking
+	// buffer based on $a1: if $a1 == 0, pointer is at 0x0893F9B8; otherwise 0x0893F9BC.
+	const u32 flag = currentMIPS->r[MIPS_REG_A1];
+	const u32 ptrAddr = (flag == 0) ? 0x0893F9B8 : 0x0893F9BC;
+	const u32 fb_address = Memory::ReadUnchecked_U32(ptrAddr) & 0x3FFFFFFF;
+
+	if (Memory::IsVRAMAddress(fb_address)) {
+		gpu->PerformReadbackToMemory(fb_address, 0x00044000);
+		NotifyMemInfo(MemBlockFlags::WRITE, fb_address, 0x00044000, "amagoushi_download_frame");
+	}
 	return 0;
 }
 
