@@ -469,8 +469,10 @@ static u32 sceGeDrawSync(u32 mode) {
 	gstate_c.textureSyncTimeDomain++;
 	u32 result = gpu->DrawSync(mode);
 	if (mode == 0 && PSP_CoreParameter().compat.flags().ForceLowerResolutionForEffectsOn) {
-		gpu->PerformReadbackToMemory(0x04000000, 0x00044000);
-		gpu->PerformReadbackToMemory(0x04080000, 0x00044000);
+		u32 fb = 0x04000000 | gstate.getFrameBufRawAddress();
+		if (fb == 0x04000000 || fb == 0x04080000) {
+			gpu->PerformReadbackToMemory(fb, 0x00044000);
+		}
 	}
 	return hleLogDebug(Log::sceGe, result);
 }
