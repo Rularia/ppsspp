@@ -126,6 +126,8 @@ static const HardHashTableEntry hardcodedHashes[] = {
 	{ 0x1252e902d0b49bfb, 44, "vector_sub_q_2", },
 	{ 0x12df3d33a58d0298, 52, "sceVfpuMatrix3Unit", },
 	{ 0x12eed64025f5052bULL, 268, "amagoushi_download_frame", }, // Amagoushi no Yakata (ULJS00216)
+	{ 0x63efd322d02c32c1ULL, 108, "amagoushi_ice_download_frame", }, // Koori no Bohyou (NPJH50186 / ULJS00247)
+	{ 0xbd015888f2167ac9ULL, 532, "amagoushi_ice_download_frame_core", }, // Koori no Bohyou (NPJH50186 / ULJS00247)
 	{ 0x12feef7b017d3431, 700, "memmove", },
 	{ 0x1322c7e3fe6dff4d, 784, "_free_r", },
 	{ 0x1376c115d5f1d90c, 36, "strlen", },
