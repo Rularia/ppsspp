@@ -1863,6 +1863,8 @@ static const ReplacementTableEntry entries[] = {
 	{ "soranokiseki_fc_download_frame", &Hook_soranokiseki_fc_download_frame, 0, REPFLAG_HOOKENTER, 0x180 },
 	{ "soranokiseki_sc_download_frame", &Hook_soranokiseki_sc_download_frame, 0, REPFLAG_HOOKENTER, },
 	{ "amagoushi_download_frame", &Hook_amagoushi_download_frame, 0, REPFLAG_HOOKENTER },
+	{ "amagoushi_ice_download_frame", &Hook_amagoushi_download_frame, 0, REPFLAG_HOOKENTER },
+	{ "amagoushi_ice_download_frame_core", &Hook_amagoushi_download_frame, 0, REPFLAG_HOOKENTER },
 	{ "bokunonatsuyasumi4_download_frame", &Hook_bokunonatsuyasumi4_download_frame, 0, REPFLAG_HOOKENTER, 0x8C },
 	{ "danganronpa2_1_download_frame", &Hook_danganronpa2_1_download_frame, 0, REPFLAG_HOOKENTER, 0x68 },
 	{ "danganronpa2_2_download_frame", &Hook_danganronpa2_2_download_frame, 0, REPFLAG_HOOKENTER, 0x94 },
