@@ -986,6 +986,13 @@ static int Hook_soranokiseki_sc_download_frame() {
 }
 
 static int Hook_amagoushi_download_frame() {
+	// Amagoushi no Yakata series (ULJS00216, ULJS00230, NPJH50186, ULJS00247)
+	// Offscreen picking pass renders to 0x04000000, 0x04044000, or 0x04080000.
+	// Flush GPU framebuffer to VRAM before CPU decodes pixels into hit-test table.
+	gpu->PerformReadbackToMemory(0x04000000, 0x00044000);
+	gpu->PerformReadbackToMemory(0x04044000, 0x00044000);
+	gpu->PerformReadbackToMemory(0x04080000, 0x00044000);
+	NotifyMemInfo(MemBlockFlags::WRITE, 0x04000000, 0x00044000, "amagoushi_download_frame");
 	return 0;
 }
 
